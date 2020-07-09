@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
 
