@@ -24,36 +24,33 @@ class SignUpActivity : AppCompatActivity() {
         editEmailAddress = findViewById(R.id.editEmailAddress)
         var buttonSignUp = findViewById<Button>(R.id.buttonSignUp)
 
-        buttonSignUp.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                // Create the ParseUser
-                val user = ParseUser()
+        buttonSignUp.setOnClickListener {
+            // Create the ParseUser
+            val user = ParseUser()
 
-                // with statement allows access properties of User without needing to repeat
-                // i.e. user.username =
-                //user.setPassword
-                with(user) {
-                    username = editUserSignUp?.text.toString()
-                    setPassword(editPasswordSignUp?.text.toString())
-                    email = editEmailAddress?.text.toString()
-                    signUpInBackground { e ->
-                        if (e == null) {
-                            // Sign up Successful
-                            Toast.makeText(applicationContext, "Sign Up Successful!", Toast.LENGTH_SHORT).show()
-                            val i = Intent(applicationContext, LoginActivity::class.java)
-                            startActivity(i)
+            // with statement allows access properties of User without needing to repeat
+            // i.e. user.username =
+            //user.setPassword
+            with(user) {
+                username = editUserSignUp?.text.toString()
+                setPassword(editPasswordSignUp?.text.toString())
+                email = editEmailAddress?.text.toString()
+                signUpInBackground { e ->
+                    if (e == null) {
+                        // Sign up Successful
+                        Toast.makeText(applicationContext, "Sign Up Successful!", Toast.LENGTH_SHORT).show()
+                        val i = Intent(applicationContext, LoginActivity::class.java)
+                        startActivity(i)
 
-                        } else {
-                            // Sign up didn't succeed. Look at the ParseException
-                            // to figure out what went wrong
-                            Toast.makeText(applicationContext, "Sign Up Failed!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Sign up didn't succeed. Look at the ParseException
+                        // to figure out what went wrong
+                        Toast.makeText(applicationContext, "Sign Up Failed!", Toast.LENGTH_SHORT).show()
 
-                        }
                     }
                 }
-
             }
-        })
+        }
 
 
     }

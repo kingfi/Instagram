@@ -7,12 +7,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.instagram.EndlessRecyclerViewScrollListener;
 import com.example.instagram.Post;
 import com.example.instagram.PostsAdapter;
 import com.example.instagram.R;
@@ -29,6 +31,9 @@ public class PostsFragment extends Fragment {
     private RecyclerView recyclerPosts;
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
+    private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
+
 
     public PostsFragment() {
         //Required empty public constructor
@@ -53,11 +58,33 @@ public class PostsFragment extends Fragment {
         // set the adapter on the recycler view
         recyclerPosts.setAdapter(adapter);
         // set the layout manager on the recycler view
-        recyclerPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerPosts.setLayoutManager(linearLayoutManager);
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                queryPosts();
+            }
+        };
+
+        recyclerPosts.addOnScrollListener(scrollListener);
         queryPosts();
+
+        //Look up the swipe container view
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(TAG, "Fetching new data");
+                queryPosts();
+            }
+        });
     }
 
-    protected void queryPosts() {
+    private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
         //include author information
@@ -76,6 +103,7 @@ public class PostsFragment extends Fragment {
                 }
                 allPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
             }
         });
     }
