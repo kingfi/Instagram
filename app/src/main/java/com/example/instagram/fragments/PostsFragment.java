@@ -19,6 +19,7 @@ import com.example.instagram.EndlessRecyclerViewScrollListener;
 import com.example.instagram.Post;
 import com.example.instagram.PostsAdapter;
 import com.example.instagram.R;
+import com.example.instagram.SpacesItemDecoration;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -74,6 +75,7 @@ public class PostsFragment extends Fragment {
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerPosts.addItemDecoration(itemDecoration);
+
         recyclerPosts.addOnScrollListener(scrollListener);
         queryPosts();
 

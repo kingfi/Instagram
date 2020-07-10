@@ -25,6 +25,7 @@ import com.example.instagram.Post;
 import com.example.instagram.PostsAdapter;
 import com.example.instagram.ProfileAdapter;
 import com.example.instagram.R;
+import com.example.instagram.SpacesItemDecoration;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -83,6 +84,9 @@ public class ProfileFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+//        SpacesItemDecoration decoration = new SpacesItemDecoration(0);
+//        recyclerPosts.addItemDecoration(decoration);
 
         // create the data source
         allPosts = new ArrayList<>();
