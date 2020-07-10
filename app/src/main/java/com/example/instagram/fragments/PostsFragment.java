@@ -64,6 +64,9 @@ public class PostsFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                if (totalItemsCount == adapter.getItemCount()) {
+                    return;
+                }
                 queryPosts();
             }
         };

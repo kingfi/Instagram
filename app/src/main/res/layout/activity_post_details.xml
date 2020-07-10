@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    tools:context=".PostDetailsActivity">
 
     <TextView
         android:id="@+id/textItemUsername"
@@ -71,9 +72,7 @@
     <ImageView
         android:id="@+id/imageItemProfile"
         android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:cropToPadding="false"
-        android:scaleType="center"
+        android:layout_height="38dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />

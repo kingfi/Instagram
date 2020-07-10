@@ -6,26 +6,35 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.instagram.LoginActivity;
 import com.example.instagram.Post;
 import com.example.instagram.PostsAdapter;
 import com.example.instagram.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
@@ -33,6 +42,8 @@ public class ProfileFragment extends Fragment {
     private PostsAdapter adapter;
     private List<Post> allPosts;
     private TextView textViewLogout;
+    private ImageView profileImage;
+    private TextView textViewProfileUsername;
 
 
     @Override
@@ -46,6 +57,21 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerPosts = view.findViewById(R.id.recyclerPostsProfile);
         textViewLogout = view.findViewById(R.id.textViewLogout);
+        profileImage =view.findViewById(R.id.profileImage);
+        textViewProfileUsername = view.findViewById(R.id.textViewProfileUsername);
+
+        textViewProfileUsername.setText(ParseUser.getCurrentUser().getUsername());
+
+        ParseFile profile = (ParseFile) ParseUser.getCurrentUser().get("profilePic");
+        if (profile != null) {
+            Glide.with(getContext()).load(profile.getUrl()).into(profileImage);
+        }
+
+        int radius = 30;
+        int margin = 2;
+        Glide.with(getContext()).load(profile.getUrl()).transform(new RoundedCornersTransformation(radius,margin)).into(profileImage);
+
+
 
         textViewLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +90,7 @@ public class ProfileFragment extends Fragment {
         // set the adapter on the recycler view
         recyclerPosts.setAdapter(adapter);
         // set the layout manager on the recycler view
-        recyclerPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerPosts.setLayoutManager(new GridLayoutManager(getContext(),3));
         queryUserPosts();
 
     }

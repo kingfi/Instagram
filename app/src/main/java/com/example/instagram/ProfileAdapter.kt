@@ -16,7 +16,7 @@ import com.parse.ParseFile
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import org.parceler.Parcels
 
-class PostsAdapter(private val context: Context, private var posts: MutableList<Post>) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
+class ProfileAdapter(private val context: Context, private var posts: MutableList<Post>) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false)
         return ViewHolder(view)
@@ -76,7 +76,7 @@ class PostsAdapter(private val context: Context, private var posts: MutableList<
         // onClick to go to PostsDetailsActivity
         override fun onClick(p0: View?) {
             // Get item position
-            Log.i("POSTSADAPTER", "ITEM CLICKED")
+            Log.i("PROFILE_ADAPTER", "ITEM CLICKED")
             val position : Int = adapterPosition
 
             //Make sure position is valid i.e actually exists in the view
@@ -90,7 +90,7 @@ class PostsAdapter(private val context: Context, private var posts: MutableList<
                 //Serialize the post using the parceler
                 i.putExtra(Post::class.java.simpleName, Parcels.wrap(post))
 
-               // Show activity
+                // Show activity
                 context.startActivity(i)
             }
         }
