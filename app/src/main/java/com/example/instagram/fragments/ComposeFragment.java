@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.instagram.MainActivity;
@@ -47,6 +48,7 @@ public class ComposeFragment extends Fragment {
     private EditText editTextDescription;
     private Button buttonTakePic;
     private ImageView imageViewPost;
+    private ProgressBar progressBar;
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -67,11 +69,13 @@ public class ComposeFragment extends Fragment {
         editTextDescription = view.findViewById(R.id.etDescription);
         buttonTakePic = view.findViewById(R.id.btnTakePic);
         imageViewPost = view.findViewById(R.id.ivPostImage);
+        progressBar = view.findViewById(R.id.progressBar);
 
         // queryPosts();
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(ProgressBar.VISIBLE);
                 String description = editTextDescription.getText().toString();
                 if (description.isEmpty())  {
                     Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
@@ -164,7 +168,8 @@ public class ComposeFragment extends Fragment {
                     Log.i(TAG, "Post save was successful");
                     editTextDescription.setText("");
                     imageViewPost.setImageResource(0);
-                }
+                }                progressBar.setVisibility(ProgressBar.INVISIBLE);
+
 
             }
         });
