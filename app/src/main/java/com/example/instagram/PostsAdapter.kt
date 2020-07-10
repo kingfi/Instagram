@@ -69,7 +69,7 @@ class PostsAdapter(private val context: Context, private var posts: MutableList<
 
             val radius = 100
             val margin = 2
-            val profile : ParseFile = post.user!!.get("profilePic") as ParseFile
+            val profile : ParseFile = post.user!!.get("profilePicture") as ParseFile
             Glide.with(context).load(profile.url).transform(RoundedCornersTransformation(radius,margin)).into(imageItemProfile)
         }
 

@@ -19,10 +19,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.example.instagram.fragments.ComposeFragment
+import com.parse.ParseException
+import com.parse.ParseFile
 import com.parse.ParseUser
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import java.io.File
 import java.lang.Exception
+import kotlin.math.sign
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -36,6 +39,7 @@ class SignUpActivity : AppCompatActivity() {
     private var imageSignUp: ImageView? = null
     private var photoFile : File? = null
     private val photoFileName = "profile.jpg"
+    private  var photoFileParse: ParseFile? = null
 
 
 
@@ -51,35 +55,64 @@ class SignUpActivity : AppCompatActivity() {
 
         imageSignUp!!.setOnClickListener { launchCamera() }
 
+
         buttonSignUp.setOnClickListener {
             // Create the ParseUser
-            val user = ParseUser()
 
-            // with statement allows access properties of User without needing to repeat
-            // i.e. user.username =
-            //user.setPassword
-            with(user) {
-                username = editUserSignUp?.text.toString()
-                setPassword(editPasswordSignUp?.text.toString())
-                email = editEmailAddress?.text.toString()
-                signUpInBackground { e ->
+            if (photoFile == null){
+                Toast.makeText(this,"You need to add a profile pic!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else{
+                photoFileParse = ParseFile(photoFile!!)
+
+                photoFileParse!!.saveInBackground { e: ParseException? ->
                     if (e == null) {
-                        // Sign up Successful
-                        Toast.makeText(applicationContext, "Sign Up Successful!", Toast.LENGTH_SHORT).show()
-                        val i = Intent(applicationContext, LoginActivity::class.java)
-                        startActivity(i)
-
-                    } else {
-                        // Sign up didn't succeed. Look at the ParseException
-                        // to figure out what went wrong
-                        Toast.makeText(applicationContext, "Sign Up Failed!", Toast.LENGTH_SHORT).show()
-
+                        signUp()
                     }
                 }
             }
+
         }
 
+    }
 
+    private fun signUp() {
+        val user = ParseUser()
+        // with statement allows access properties of User without needing to repeat
+        // i.e. user.username =
+        //user.setPassword
+        with(user) {
+            username = editUserSignUp?.text.toString()
+            setPassword(editPasswordSignUp?.text.toString())
+            email = editEmailAddress?.text.toString()
+//            if (photoFile == null) {
+//                android.widget.Toast.makeText(this@SignUpActivity,"You need to add a profile pic!", android.widget.Toast.LENGTH_SHORT).show()
+//                return@with
+//            }
+            Log.i("SignUp", photoFile.toString())
+
+
+            user.put("profilePicture", photoFileParse!!)
+
+
+
+
+
+            signUpInBackground { e ->
+                if (e == null) {
+                    // Sign up Successful
+                    android.widget.Toast.makeText(applicationContext, "Sign Up Successful!", android.widget.Toast.LENGTH_LONG).show()
+                    val i = android.content.Intent(applicationContext, com.example.instagram.LoginActivity::class.java)
+                    startActivity(i)
+
+                } else {
+                    // Sign up didn't succeed. Look at the ParseException
+                    // to figure out what went wrong
+                    android.widget.Toast.makeText(applicationContext, "Sign Up Failed!", android.widget.Toast.LENGTH_SHORT).show()
+
+                }
+            }
+        }
     }
 
     private fun launchCamera() {
@@ -114,7 +147,7 @@ class SignUpActivity : AppCompatActivity() {
 //                imageSignUp!!.setImageBitmap(takenImage)
 
                 // Rotate bitmap image
-                try{
+                try {
                     val exif: ExifInterface = ExifInterface(photoFile!!.absolutePath)
                     val orientation: Int = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1)
                     val matrix: Matrix = Matrix()
@@ -127,10 +160,11 @@ class SignUpActivity : AppCompatActivity() {
                     }
                     //rotating bitmap
                     takenImage = Bitmap.createBitmap(takenImage, 0, 0, takenImage.width, takenImage.height, matrix, true)
-                } catch (e : Exception) {
+                } catch (e: Exception) {
                     Log.e("SignUpActivity", "Error in rotating bitmap")
                 }
                 Glide.with(this).load(takenImage).into(imageSignUp!!)
+
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show()
             }

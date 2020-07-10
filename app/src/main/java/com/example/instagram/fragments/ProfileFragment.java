@@ -64,7 +64,7 @@ public class ProfileFragment extends Fragment {
 
         textViewProfileUsername.setText(ParseUser.getCurrentUser().getUsername());
 
-        ParseFile profile = (ParseFile) ParseUser.getCurrentUser().get("profilePic");
+        ParseFile profile = (ParseFile) ParseUser.getCurrentUser().get("profilePicture");
         if (profile != null) {
             Glide.with(getContext()).load(profile.getUrl()).into(profileImage);
         }
