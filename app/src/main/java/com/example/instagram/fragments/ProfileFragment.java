@@ -23,6 +23,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.instagram.LoginActivity;
 import com.example.instagram.Post;
 import com.example.instagram.PostsAdapter;
+import com.example.instagram.ProfileAdapter;
 import com.example.instagram.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -39,7 +40,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
     private RecyclerView recyclerPosts;
-    private PostsAdapter adapter;
+    private ProfileAdapter adapter;
     private List<Post> allPosts;
     private TextView textViewLogout;
     private ImageView profileImage;
@@ -86,7 +87,7 @@ public class ProfileFragment extends Fragment {
         // create the data source
         allPosts = new ArrayList<>();
         // create the adapter
-        adapter = new PostsAdapter(getContext(), allPosts);
+        adapter = new ProfileAdapter(getContext(), allPosts);
         // set the adapter on the recycler view
         recyclerPosts.setAdapter(adapter);
         // set the layout manager on the recycler view

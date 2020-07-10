@@ -18,7 +18,7 @@ import org.parceler.Parcels
 
 class ProfileAdapter(private val context: Context, private var posts: MutableList<Post>) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_profile, parent, false)
         return ViewHolder(view)
     }
 
@@ -45,11 +45,7 @@ class ProfileAdapter(private val context: Context, private var posts: MutableLis
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener  {
-        private val textUsername: TextView = itemView.findViewById(R.id.textItemUsername)
-        private val postImage: ImageView = itemView.findViewById(R.id.postItemImage)
-        private val textDescription: TextView = itemView.findViewById(R.id.textItemDescription)
-        private val textViewTimestamp: TextView = itemView.findViewById(R.id.textItemTimeStamp)
-        private val imageItemProfile: ImageView = itemView.findViewById(R.id.imageItemProfile)
+        private val profileItemImage : ImageView = itemView.findViewById(R.id.profileItemImage)
 
         init {
             itemView.setOnClickListener(this)
@@ -57,20 +53,11 @@ class ProfileAdapter(private val context: Context, private var posts: MutableLis
 
         fun bind(post: Post) {
             //Bind the post data to view elements
-            textDescription.text = post.description
-            textUsername.text = post.user!!.username
-
-            textViewTimestamp.text = post.timeStamp!!.toString()
-
             val image = post.image
             if (image != null) {
-                Glide.with(context).load(post.image!!.url).into(postImage)
+                Glide.with(context).load(post.image!!.url).into(profileItemImage)
             }
 
-            val radius = 100
-            val margin = 2
-            val profile : ParseFile = post.user!!.get("profilePic") as ParseFile
-            Glide.with(context).load(profile.url).transform(RoundedCornersTransformation(radius,margin)).into(imageItemProfile)
         }
 
         // onClick to go to PostsDetailsActivity
