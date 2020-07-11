@@ -2,8 +2,6 @@
 
 **Parstagram-Android** is a photo sharing app using Parse as its backend.
 
-Time spent: **X** hours spent in total
-
 ## User Stories
 
 The following **required** functionality is completed:
@@ -37,8 +35,8 @@ The following **stretch** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://i.imgur.com/1b8AraQ.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-<img src='https://i.imgur.com/VQSUpMa.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/1b8AraQ.gifv' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/VQSUpMa.gifv' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 
 ## Credits
