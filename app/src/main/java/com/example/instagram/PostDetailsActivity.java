@@ -42,7 +42,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         buttonItemLike = findViewById(R.id.buttonItemLike);
         buttonItemComment = findViewById(R.id.buttonItemComment);
 
-        ParseFile profile = (ParseFile) post.getUser().get("profilePic");
+        ParseFile profile = (ParseFile) post.getUser().get("profilePicture");
 
         Glide.with(this).load(profile.getUrl()).into(imageItemProfile);
 
