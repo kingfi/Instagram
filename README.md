@@ -35,8 +35,8 @@ The following **stretch** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://imgur.com/HjMY0z3' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-<img src='https://imgur.com/VQSUpMa' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://media.giphy.com/media/ek4We9CItsxf3kDpQ0/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://media.giphy.com/media/SuHuZ77f2QZKdzMmWG/giphy.gif' width='' alt='Video Walkthrough' />
 
 
 ## Credits
